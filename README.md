@@ -1,8 +1,6 @@
 # Healthcare_RS
 A case study on Healthcare Recommender Systems
 
-# GRP-202202
-
 ## URL of the system
 
 If you want to use the system online, please go to [http://101.43.9.203:1266/login.html](http://101.43.9.203:1266/login.html).
