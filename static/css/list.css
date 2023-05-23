@@ -1,0 +1,281 @@
+body {
+	background-color: #EEFFFF;
+}
+
+/* .st1 {
+    height: 60px;
+    width: 90%;
+    background-color: #ddd;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+
+.st2 {
+    height: 32px;
+    width: 60px;
+    background-color: #2ac;
+    border-radius: 4px;
+    margin-left: 6px;
+    margin-top: 20px;
+    float: left;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    font-size: 8px;
+} */
+/* .chosed {
+    background-color: #a00;
+} */
+#head {
+	text-align: center;
+	margin: 30px;
+}
+
+p {
+	font-size: 25px;
+	line-height: 20px;
+}
+
+select {
+	width: 200px;
+	height: 30px;
+	margin: 20px;
+	font-size: 18px;
+}
+
+.flex-item {
+	padding: 30px 30px;
+	display: flex;
+	justify-content: space-around;
+	/* background-color: rgb(115, 223, 241); */
+}
+
+#sort {
+	display: inline-block;
+	border-radius: 4px;
+	background-color: rgb(191, 245, 255, 0.8);
+	border: none;
+	color: #54545b;
+	text-align: center;
+	font-size: 15px;
+	padding: 10px;
+	width: 140px;
+	height: 60px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 5px;
+}
+
+#distance {
+	display: inline-block;
+	border-radius: 4px;
+	background-color: #b8c9e7;
+	border: none;
+	color: #54545b;
+	text-align: center;
+	font-size: 15px;
+	padding: 10px;
+	width: 140px;
+	height: 60px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 5px;
+}
+
+#sort span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+#sort span:after {
+	content: '\00bb';
+	/* CSS Entities. 如果用的是 HTML Entities, 请改成 &#8594;*/
+	position: absolute;
+	opacity: 1;
+	top: 8px;
+	right: 0px;
+	transition: 0.5s;
+}
+
+#sort:hover span {
+	padding-right: 25px;
+}
+
+#sort:hover span:after {
+	opacity: 1;
+	right: 0;
+}
+
+#distance span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+#distance span:after {
+	content: '\00bb';
+	/* CSS Entities. 如果用的是 HTML Entities, 请改成 &#8594;*/
+	position: absolute;
+	opacity: 1;
+	top: 25px;
+	right: -20px;
+	transition: 0.5s;
+	background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+}
+
+#distance:hover span {
+	padding-right: 25px;
+}
+
+#distance:hover span:after {
+	opacity: 1;
+	right: 0;
+}
+
+/* #Ysort{
+	font-size:medium;
+	color: #EEFFFF;
+	margin: auto;
+} */
+.btn {
+	width: 720px;
+	margin: 10px;
+	height: 198px;
+	color: #fff;
+	opacity: 0.8;
+	background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+	/*font-family: "Lato", sans-serif;*/
+	font-weight: 500;
+	border-radius: 10px;
+	box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+		7px 7px 20px 0px rgba(0, 0, 0, .1),
+		4px 4px 5px 0px rgba(0, 0, 0, .1);
+	transition: all 0.3s ease;
+	cursor: pointer;
+	border: none;
+	position: relative;
+	/*line-height: 30px;*/
+	padding: 0;
+	top: 10px;
+	font-family: Helvetica;
+	font-weight: bolder;
+}
+
+.btn span {
+	white-space: nowrap;
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	font-size: 25px;
+	top: -125px;
+
+}
+
+.btn::before,
+.btn::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	right: 0;
+	background: rgba(2, 126, 251, 1);
+	transition: all 0.3s ease;
+}
+
+.btn::before {
+	width: 0;
+	height: 2px;
+}
+
+.btn::after {
+	height: 0;
+	width: 2px;
+}
+
+.btn span::before,
+.btn span::after {
+	position: absolute;
+	content: '';
+	bottom: 0;
+	left: 0;
+	background: rgba(2, 126, 251, 1.0);
+	transition: all 0.3s ease;
+	margin-top: 0px;
+}
+
+.btn span::before {
+	width: 0;
+	height: 2px;
+}
+
+.btn span::after {
+	height: 0;
+	width: 2px;
+}
+
+.btn:hover {
+	background: transparent;
+	color: rgb(0, 0, 0);
+	opacity: 0.8;
+	background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+}
+
+.btn:hover::before {
+	width: 100%;
+}
+
+.btn:hover::after {
+	height: 100%;
+}
+
+.btn span:hover::before {
+	width: 100%;
+}
+
+.btn span:hover::after {
+	height: 100%;
+}
+
+#logout {
+	position: absolute;
+	right: 50px;
+	top: 10px;
+	width: 50px;
+	height: 50px;
+	/* background-color: #31b820ef; */
+	border-radius: 10000000px;
+	/* border-color: #31b820ef; */
+	background-image: url('../img/patient.png');
+	background-size: cover;
+}
+
+.doctor {
+	position: relative;
+	top: 20px;
+}
+
+#tabbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100px;
+	width: 100%;
+	background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+	z-index: -1;
+}
+
+.docphoto {
+	position: relative;
+	top: 50px;
+	left: 50px;
+	border-style: solid;
+	border-width: 2px;
+	width: 100px;
+	height: 100px;
+	border-radius: 1000px;
+	background-image: url('../img/doctor.jpg');
+	background-size: cover;
+}

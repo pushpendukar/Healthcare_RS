@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>login</title>
+
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+
+<!-- <body class="bg" onkeydown="enterSubmit(event)"> -->
+
+<body class="bg"></body>
+<div class="center">
+    <div class="word">Find a Doctor</div>
+    <form class="a">
+        <div class="arrow"></div>
+        <input class="form-control" type="text" value="" placeholder="  username" autocomplete="off" id="username">
+    </form>
+    <form class="a">
+        <div class="arrow"></div>
+        <input class="form-control" type="password" value="" placeholder="  password" autocomplete="off" id="password">
+        <input style="visibility: hidden;">
+    </form>
+    <form class="a">
+        <div class="arrow"></div>
+        <select id="sid">
+                <option value=2 class="role" style="opacity: 1;">patient</option>
+                <option value=0 class="role" style="opacity: 1;">doctor</option>
+                <option value=1 class="role" style="opacity: 1;">hospital</option>
+                <option value=3 class="role" style="opacity: 1;">maintainer</option>
+        </select>
+    </form>
+    <div class="btn">
+        <div class="jump1">
+            <a href="javascript:;" id="fpswd">Forgotten your password?</a>
+        </div>
+        <div class="login">
+            <button click="upload" style="cursor:pointer" id="login">
+                <p id="p">sign in</p>
+            </button>
+        </div>
+
+        <div class="jump2">
+            <a href="javascript:;" id="register">Register</a>
+        </div>
+    </div>
+    <!-- <div
+            style="z-index:-1;border-radius: 5%;left: calc(50% - 250px);top: calc(50% - 250px);position: absolute;width: 500px;height: 450px;background-color:  rgb(191, 245, 255);opacity: 0.8;">
+
+        </div> -->
+</div>
+<!-- <div class="role_div">
+    <select id="sid">
+        <option value=2 class="role" style="opacity: 1;">patient</option>
+        <option value=0 class="role" style="opacity: 1;">doctor</option>
+        <option value=1 class="role" style="opacity: 1;">hospital</option>
+        <option value=3 class="role" style="opacity: 1;">maintainer</option>
+    </select>
+</div> -->
+<script type="text/javascript" src="js/jquery-mini.js"></script>
+<script src="js/constant.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("input").keydown(function(event) {
+            if (event.keyCode == 13) {
+                // console.log("123");
+                var btn = document.getElementById("login");
+                btn.onclick();
+            }
+        });
+    });
+    window.onload = function() {
+
+        var address = getAddress();
+        var btn = document.getElementById("login");
+        btn.onclick = function test() {
+            var uname = document.getElementById("username").value;
+            var upassword = document.getElementById("password").value;
+            console.log(uname);
+            console.log(upassword);
+            if (uname === '') {
+                alert("please input username.")
+            }
+            if (upassword === '') {
+                alert("please input password.")
+            }
+            if (uname != '' && upassword != '') {
+                var sel = document.getElementById("sid");
+                var index = sel.selectedIndex;
+                var role = parseInt(sel.options[index].value);
+                // var type=parseInt(role);
+                var data = {
+                        "username": uname,
+                        "password": upassword,
+                        "type": role
+                    }
+                    // console.log(role);
+                    // console.log(data);
+                var xhr = new XMLHttpRequest();
+                xhr.open("post", "http://" + address + "/account/login", true);
+                xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                xhr.send(JSON.stringify(data));
+                console.log("123");
+                // console.log(xhr.responseText);
+                xhr.onreadystatechange = function() {
+                    console.log("123");
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            var obj = JSON.parse(xhr.responseText);
+                            // console.log(xhr.responseText);
+                            // console.log(obj);
+                            if (obj.type == 0) {
+                                var username = data.username;
+                                window.localStorage.setItem('username', username);
+                                var tokend = obj.token;
+                                window.localStorage.setItem('tokend', tokend);
+                                // console.log(window.localStorage.getItem("tokend"));
+                                location.href = './doctor1.html';
+                            }
+                            if (obj.type == 1) {
+                                var username = data.username;
+                                // console.log(username);
+                                window.localStorage.setItem('username', username);
+                                var tokenh = obj.token;
+                                window.localStorage.setItem('tokenh', tokenh);
+                                // console.log(window.localStorage.getItem('tokenh', tokenh));
+                                location.href = './hospital.html';
+                            }
+                            if (obj.type == 2) {
+                                var username = data.username;
+                                window.localStorage.setItem('username', username);
+                                var tokenp = obj.token;
+                                window.localStorage.setItem('tokenp', tokenp);
+                                location.href = './patient.html';
+                            }
+                            if (obj.type == 3) {
+                                var username = data.username;
+                                window.localStorage.setItem('username', username);
+                                var tokenm = obj.token;
+                                window.localStorage.setItem('tokenm', tokenm);
+                                location.href = './maintainer.html';
+                            }
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 400) {
+                            alert("An error occurs.");
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 401) {
+                            alert("The user name does not exist.");
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 402) {
+                            alert("Wrong password.");
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    var fpassword = document.getElementById("fpswd");
+    fpassword.onclick = function() {
+        // window.open("password.html");
+        window.location.href = './password.html';
+    }
+    var register = document.getElementById("register");
+    register.onclick = function() {
+        // window.open("register.html");
+        window.location.href = './register.html'
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: lightblue
+}
+
+.bg {
+    background-image: url("../img/Login-page.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+.out {
+    margin: 120px;
+}
+
+.top {
+    position: relative;
+    height: 200px;
+}
+
+.top-top {
+    border: 1px solid;
+    border-radius: 15px;
+    position: absolute;
+    left: 968px;
+    top: -75px;
+    background-color: white;
+}
+
+.top-bottom {
+    position: absolute;
+    left: 0;
+    top: 30px;
+    height: 100px;
+}
+
+#username {
+    font-size: 20px;
+    padding: 15px;
+    left: 80px;
+    position: absolute;
+    height: 55px;
+    width: 120px;
+    text-align: center;
+    font-size: 20px;
+    padding: 15px;
+}
+
+#userimg {
+    width: 50px;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 50%;
+    position: absolute;
+    left: 195px;
+    top: 2px;
+    background-color: rgb(56, 170, 219);
+}
+
+.top-img {
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: white;
+}
+
+.info {
+    position: absolute;
+    left: 135px;
+    top: 33px;
+    font-size: 25px;
+    width: 1000px;
+    height: 250px;
+    border: 1px solid black;
+    color: white;
+    border-radius: 20px;
+}
+
+
+#Id {
+    border: 1px solid;
+    height: 120px;
+    width: 1100px;
+    border: none;
+    /* background-color: lightblue; */
+    position: absolute;
+    left: 25px;
+    top: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#name {
+    border: 1px solid;
+    height: 120px;
+    width: 1100px;
+    border: none;
+    /* background-color: lightblue; */
+    position: absolute;
+    left: 25px;
+    top: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#location {
+    border: 1px solid;
+    height: 120px;
+    width: 1100px;
+    border: none;
+    /* background-color: lightblue; */
+    position: absolute;
+    left: 25px;
+    top: 102px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#description {
+    border: 1px solid;
+    height: 120px;
+    width: 1100px;
+    border: none;
+    /* background-color: lightblue; */
+    position: absolute;
+    left: 25px;
+    top: 162px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* body div div div div div {
+    width: 120px;
+    height: 50px;
+    border: 1px solid;
+    float: left;
+    margin: 10px 0px 10px 100px;
+    background-color: white;
+    text-align: center;
+    line-height: 50px;
+} */
+#update {
+    position: absolute;
+    top: 400px;
+    left: 550px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #31b820ef;
+    color: rgb(255, 255, 255);
+    border: 0px;
+}
+
+#u2 {
+    position: absolute;
+    top: 400px;
+    left: 200px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #31b820ef;
+    color: rgb(255, 255, 255);
+    border: 0px;
+}
+
+#u3 {
+    position: absolute;
+    top: 400px;
+    left: 900px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #31b820ef;
+    color: rgb(255, 255, 255);
+    border: 0px;
+}
+
+#btnDiv {
+    left: 300px;
+}
+
+#tabbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+    z-index: -1;
+}
+
+#logout {
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    width: 50px;
+    height: 50px;
+    /* background-color: #31b820ef; */
+    border-radius: 10000000px;
+    /* border-color: #31b820ef; */
+    background-image: url('../img/patient.png');
+    background-size: cover;
+}

@@ -1,0 +1,230 @@
+.flex-item {
+    padding: 30px 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* body {
+	background-color: #EEFFFF;
+} */
+
+#head {
+    position: fixed;
+    text-align: center;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Helvetica;
+    font-weight: bolder;
+}
+
+select {
+    height: 40px;
+    width: 400px;
+    color: #336699;
+    background-color: white;
+    clear: both;
+    border: 3px;
+    padding-left: 15px;
+    font-size: 22px;
+    border-radius: 5px;
+}
+
+p {
+    font-size: 25px;
+}
+
+
+/* #submit {
+	width:200px;
+	font-size: 22px;
+	height: 35px;
+	display: block;
+	margin: 4 auto;
+	color: #649aeb;
+	background-color: #DDFFFF;
+	border-color: lightgrey;
+} */
+
+#submit {
+    position: fixed;
+    bottom: 16px;
+    width: 150px;
+    height: 50px;
+    background-color: #31b820ef;
+    border-radius: 10000000px;
+    font-family: Helvetica;
+    font-weight: bolder;
+    right: 40px;
+}
+
+#s1 {
+    position: absolute;
+    width: 250px;
+}
+
+#s2 {
+    position: absolute;
+    width: 250px;
+}
+
+#s3 {
+    position: absolute;
+    width: 250px;
+}
+
+#s4 {
+    position: absolute;
+    width: 250px;
+}
+
+#s5 {
+    position: absolute;
+    top: 0px;
+    left: 270px;
+    width: 250px;
+}
+
+#s6 {
+    position: absolute;
+    top: 0px;
+    left: 270px;
+    width: 250px;
+}
+
+#s7 {
+    position: absolute;
+    top: 0px;
+    left: 270px;
+    width: 250px;
+}
+
+#s8 {
+    position: absolute;
+    top: 0px;
+    left: 270px;
+    width: 250px;
+}
+
+#location {
+    position: absolute;
+    top: 372px;
+    right: 85px;
+    height: 50px;
+    width: 285px;
+    font-size: 17pt;
+    text-align: center;
+    /* background-color: white; */
+    /* border: 2px solid black; */
+}
+
+#logout {
+    padding: 0px;
+    position: fixed;
+    right: 50px;
+    top: 25px;
+    width: 50px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 50px;
+    /* background-color: #31b820ef; */
+    border-radius: 10000000px;
+    /* border-color: #31b820ef; */
+    background-image: url('../img/patient.png');
+    background-size: cover;
+}
+
+.lochange {
+    margin-right: 500px;
+}
+
+.item1 {
+    position: absolute;
+    top: 65%;
+    left: calc(50% - 120px);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: top 1s, left 1s, transform 2s;
+}
+
+.item2 {
+    position: absolute;
+    top: 65%;
+    left: calc(50% - 120px);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: top 1s, left 1s, transform 2s;
+}
+
+.item3 {
+    position: absolute;
+    top: 65%;
+    left: calc(50% - 120px);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: top 1s, left 1s, transform 2s;
+}
+
+.item4 {
+    position: absolute;
+    top: 65%;
+    left: calc(50% - 120px);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: top 1s, left 1s, transform 2s;
+}
+
+.square {
+    position: absolute;
+    top: -20px;
+    left: -12px;
+    height: 80px;
+    width: 280px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    transition: 2s;
+    background-color: rgb(191, 245, 255);
+    opacity: 0.5;
+}
+
+.user {
+    width: 50px;
+}
+
+#map {
+    position: absolute;
+    top: 163px;
+    right: 37px;
+    width: 485px;
+    height: 319px;
+    /* background-color: rgb(252, 252, 252); */
+    background-image: url(/img/map.jpg);
+    background-size: cover;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    border-color: gray;
+}
+
+.landmark {
+    position: absolute;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    /* background-color: rgb(130, 130, 199); */
+    border-radius: 50%;
+}
+
+#tabbar {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 100%;
+    background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+    z-index: -1;
+}

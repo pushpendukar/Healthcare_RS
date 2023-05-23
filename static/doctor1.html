@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doctor page</title>
+
+    <link rel="stylesheet" type="text/css" href="css/doctor1.css">
+
+    <style>
+        img {
+            width: 120px;
+            height: 100px;
+        }
+    </style>
+
+</head>
+
+<body class="bg">
+    <select type="submit" id="logout" onchange="logout()">
+        <option id="option1">
+        </option>
+        <option id="option2">Logout</option>
+
+    </select>
+    <div id="tabbar">
+        <img src="img/logo.jpg" style="height:100px;width:100px;">
+    </div>
+    <div class="out">
+        <div class="top">
+            <div class="top-bottom">
+                <div class="top-img">
+                    <img src="img/doctor.jpg" alt="img">
+                </div>
+                <div class="resume">
+                    <br>
+                    <span id="resume"></span>
+                    <span id="dId"></span>
+                    <span id="dname"></span>
+                    <span id="hname"></span>
+                </div>
+            </div>
+            <!-- <div class="top-top">
+                <button id="username">Log out</button>
+
+            </div> -->
+        </div>
+        <hr>
+        <div class="bottom">
+            <div class="averge-score">
+                <p id="ascore">Average Score: </p>
+                <div class="score"><span class="s"></span></div>
+            </div>
+            <br>
+            <div class="major">
+                <div class="major-text">Main major: </div>
+                <div calss="major-flag" id="m">
+                    <!-- <div class="major-1">knee</div>
+                    <div calss="major-2">knee</div>
+                    <div class="major-3">knee</div>
+                    <div class="major-4">knee</div>
+                    <div class="major-5">knee</div>
+                    <div class="major-6">knee</div>
+                    <div class="major-7">knee</div> -->
+                </div>
+            </div>
+            <div class="btn">
+                <a href="doctor2.html">
+                    <div class="btn-left" click="upload" style="cursor:pointer">update information</div>
+                </a>
+
+                <a href="doctor3.html">
+                    <div class="btn-right" click="upload" style="cursor:pointer">check patient</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-mini.js"></script>
+    <script src="js/constant.js"></script>
+    <script type="text/javascript">
+        function logout() {
+            localStorage.tokenp = "";
+            // console.log(localStorage.username);
+            window.location.href = './login.html';
+        }
+        window.onload = function() {
+            var name = localStorage.username;
+            document.getElementById('option1').innerHTML = name;
+            var address = getAddress();
+            var token = window.localStorage.getItem("tokend");
+            // console.log(window.localStorage.getItem("tokend"));
+            // console.log(token);
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", "http://" + address + "/info/doctor/get", true);
+            xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("Authorization", token);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        // console.log(xhr.responseText);
+                        if ((JSON.parse(xhr.responseText)).code == 200) {
+                            var jsonObj = JSON.parse(xhr.responseText);
+                            var spanResume = document.getElementById("resume");
+                            var spanscore = document.getElementsByClassName("s");
+                            var spandId = document.getElementById("dId");
+                            var spansdname = document.getElementById("dname");
+                            var spanshname = document.getElementById("hname");
+                            var majorbody = document.getElementById("m");
+                            spanResume.innerText = "Descripti: " + jsonObj.doctorInfo.description;
+                            spandId.innerText = "ID: " + jsonObj.doctorInfo.id;
+                            spansdname.innerText = "Doctor name: " + jsonObj.doctorInfo.dname;
+                            spanshname.innerText = "Hosptial: " + jsonObj.doctorInfo.hname;
+                            spanscore[0].innerText = jsonObj.doctorInfo.score;
+                            for (var i = 0; i < jsonObj.doctorTags.length; i++) {
+                                var divmajor = document.createElement("div");
+                                majorbody.appendChild(divmajor);
+                                divmajor.innerText = jsonObj.doctorTags[i];
+                            }
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 400) {
+                            alert("An error occurs.");
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 401) {
+                            alert("No doctor information.");
+                        }
+                        if ((JSON.parse(xhr.responseText)).code == 403) {
+                            alert("Wrong user type! You are not allowed to visit.");
+                        }
+                    }
+
+                }
+
+            }
+            var logOut = document.getElementById("username");
+            logOut.onclick = function() {
+                window.localStorage.removeItem("tokend")
+                window.location.href = "./login.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

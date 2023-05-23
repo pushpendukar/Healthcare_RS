@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update hospital information</title>
+
+    <link rel="stylesheet" type="text/css" href="css/hospital3.css">
+    <style>
+        img {
+            height: 130px;
+            width: 145px;
+            position: absolute;
+            left: -22px;
+            top: -21px;
+        }
+    </style>
+
+</head>
+
+<body class="bg">
+    <div id="tabbar">
+        <img src="img/logo.jpg" style="position:absolute;top:0px;left:0px;height:100px;width:100px;">
+    </div>
+    <select type="submit" id="logout" onchange="logout()">
+        <option id="option1">
+        </option>
+        <option id="option2">Logout</option>
+    </select>
+    <div class="out">
+        <div class="top">
+            <div class="top-bottom">
+                <div class="top-img">
+                    <img src="img/hospital.png" alt="img">
+                </div>
+                <div class="info">
+                    <!-- <div id="idDiv">ID:<input id="Id"></input></div> -->
+                    <div id="nameDiv">Hospital name:<input id="name"></input>
+                    </div>
+                    <div id="locationDiv">
+                        Location:
+                        <!-- <input id="location"></input> -->
+                        <select id="location">
+                            <option value="Popcorn Central" class="role">Popcorn Central</option>
+                            <option value="Ice Cream Road" class="role">Ice Cream Road</option>
+                            <option value="Bikini Bottom" class="role">Bikini Bottom</option>
+                            <option value="Coffee Plaza" class="role">Coffee Plaza</option>
+                            <option value="CSer Building" class="role">CSer Building</option>
+                            <option value="Shuangye University" class="role">Shuangye University</option>
+                        </select>
+                    </div>
+                    <div id="dDiv">Description:<input id="description"></input>
+                    </div>
+                </div>
+            </div>
+            <button id="update">submit</button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="js/jquery-mini.js"></script>
+    <script src="js/constant.js"></script>
+    <script type="text/javascript">
+        function logout() {
+            localStorage.tokenp = "";
+            // console.log(localStorage.username);
+            window.location.href = './login.html';
+        }
+        window.onload = function() {
+            var name = localStorage.username;
+            // console.log(name);
+            document.getElementById('option1').innerHTML = name;
+            var address = getAddress();
+            var token = window.localStorage.getItem("tokenh");
+            var btn = document.getElementById("update");
+            btn.onclick = function() {
+                var name = document.getElementById("name").value;
+                var location = document.getElementById("location").value;
+                var description = document.getElementById("description").value;
+                var dataTemp = {
+                    "name": name,
+                    "description": description,
+                    "location": location
+                }
+                var data = JSON.stringify(dataTemp);
+                var xhr = new XMLHttpRequest();
+                xhr.open("post", "http://" + address + "/info/hospital/update", true);
+                xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                xhr.setRequestHeader("Authorization", token);
+                xhr.send(data);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            alert("You have submit successfully!");
+                            window.location.href = "./hospital.html";
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

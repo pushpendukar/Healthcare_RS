@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Page Dimensions</title>
+</head>
+
+<body>
+    <script>
+        // 获取视口宽度和高度
+        var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        console.log("Viewport width: " + viewportWidth);
+        console.log("Viewport height: " + viewportHeight);
+
+        // 获取整个页面的宽度和高度
+        var pageWidth = document.documentElement.scrollWidth;
+        var pageHeight = document.documentElement.scrollHeight;
+
+        console.log("Page width: " + pageWidth);
+        console.log("Page height: " + pageHeight);
+    </script>
+</body>
+
+</html>

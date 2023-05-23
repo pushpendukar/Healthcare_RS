@@ -1,0 +1,165 @@
+#center {
+    margin: 0 auto;
+    width: 700px;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+#btn_div {
+    padding: 20px;
+}
+
+.btn {
+    margin: 0px 30px 0px 70px;
+}
+
+#login {
+    width: 50px;
+    height: 50px;
+    background-color: #c92d2d;
+    border-radius: 10000000px;
+    width: 200px;
+    border-color: #c92d2d;
+}
+
+#register {
+    width: 50px;
+    height: 50px;
+    background-color: #31b820ef;
+    border-radius: 10000000px;
+    width: 200px;
+    border-color: #31b820ef;
+}
+
+#register {
+    width: 200px;
+}
+
+.input-group {
+    padding: 20px;
+}
+
+.footer {
+    left: 40%;
+    width: 100%;
+    position: fixed;
+    bottom: 10px;
+}
+
+#realname {
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#username {
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#password {
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#location {
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    text-align: center;
+}
+
+#hid {
+    height: 40px;
+    width: 150px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    text-align: center;
+}
+
+#email {
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#description {
+    height: 80px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#passwordeye {
+    height: 40px;
+    border-radius: .25rem;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background-color: white;
+}
+
+#password2eye {
+    height: 40px;
+    border-radius: .25rem;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background-color: white;
+}
+
+#span_username {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_password {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_code {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_long {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_realname {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_email {
+    width: 150px;
+    color: white;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#span_description {
+    width: 150px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+#sid {
+    height: 40px;
+    width: 150px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    text-align: center;
+}

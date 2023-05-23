@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ansonika">
+    <title>Doctor Update Information List</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet"> -->
+
+    <!-- Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon fonts-->
+    <!-- <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Plugin styles -->
+    <!-- <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
+    <!-- Main styles -->
+    <link href="css/admin.css" rel="stylesheet">
+    <!-- Your custom styles -->
+    <link href="css/admin.css" rel="stylesheet">
+    <h1 id="head">Doctor Update Information List</h1>
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top" background="img/Login-page.jpg" style="background-size:100%; background-attachment: fixed;">
+    <div id="tabbar">
+        <img src="img/logo.jpg" style="position:absolute;top:0px;left:0px;height:100px;width:100px;">
+    </div>
+    <select type="submit" id="logout" onchange="logout()">
+        <option id="option1">
+        </option>
+        <option id="option2">Logout</option>
+    </select>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <div class="list_general" id="list">
+                <!-- <div>
+                    <figure><img src="img/doctor.jpg" alt=""></figure>
+                    <ul class="booking_details">
+                        <li><strong id="named"></strong> </li>
+                        <li><strong id="idd"></strong> </li>
+                        <li><strong id="description"></strong></li>
+                    </ul>
+                    <ul class="buttons">
+                        <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i>
+                                Approve</a></li>
+                        <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i>
+                                Disapprove</a></li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+        <!-- /container-fluid-->
+    </div>
+    <!-- /container-wrapper-->
+    <!-- <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Find a doctor</small>
+            </div>
+        </div>
+    </footer> -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <!-- Bootstrap core JavaScript-->
+    <!-- <script src="js/jquery-ui.min.js"></script> -->
+    <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
+    <!-- Core plugin JavaScript-->
+    <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
+    <!-- Page level plugin JavaScript-->
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+	<script src="vendor/jquery.selectbox-0.2.js"></script>
+	<script src="vendor/retina-replace.min.js"></script>
+	<script src="vendor/jquery.magnific-popup.min.js"></script> -->
+    <!-- Custom scripts for all pages-->
+    <!-- <script src="js/admin.js"></script> -->
+    <script type="text/javascript" src="js/jquery-mini.js"></script>
+    <script src="js/constant.js"></script>
+    <script type="text/javascript">
+        function logout() {
+            localStorage.tokenp = "";
+            // console.log(localStorage.username);
+            window.location.href = './login.html';
+        }
+        window.onload = function() {
+            var name = localStorage.username;
+            // console.log(name);
+            document.getElementById('option1').innerHTML = name;
+            var address = getAddress();
+            var token = window.localStorage.getItem("tokenh");
+            // console.log(token);
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", "http://" + address + "/info/check/get", true);
+            xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("Authorization", token);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        console.log(xhr.responseText);
+                        var obj = JSON.parse(xhr.responseText);
+                        if (obj.code == 201) {
+                            alert(obj.message);
+                        }
+                        if (obj.code == 400) {
+                            alert(obj.message);
+                        }
+                        if (obj.code == 403) {
+                            alert(obj.message);
+                        } else {
+                            var arr = obj.returnArray;
+                            console.log(obj);
+                            var listDiv = document.getElementById("list");
+                            for (var i = 0; i < arr.length; i++) {
+                                var div = document.createElement("div");
+                                listDiv.appendChild(div);
+                                div.innerHTML = '<figure><img src="img/doctor.jpg" alt=""></figure><ul class="booking_details"><li><strong class="named">Doctor Name: </strong> </li><li><strong class="idd">Doctor ID: </strong> </li><li><strong class="description">Description:</strong></li></ul><ul class="buttons"><li class="approve"><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i>Approve</a></li><li class="disapprove"><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i>Disapprove</a></li></ul>';
+
+                            }
+                            var named = document.getElementsByClassName("named");
+                            // console.log(named);
+                            var id = document.getElementsByClassName("idd");
+                            var description = document.getElementsByClassName("description");
+                            // console.log(description);
+                            for (var i = 0; i < arr.length; i++) {
+                                named[i].innerHTML = "Doctor Name: " + arr[i].name;
+                                id[i].innerHTML = "Doctor ID: " + arr[i].id;
+                                description[i].innerText = "Description: " + arr[i].description;
+                            }
+                            var approve = document.getElementsByClassName("approve");
+                            for (var i = 0; i < approve.length; i++) {
+                                approve[i].onclick = function() {
+                                    // console.log(this.parentNode.parentNode.getElementsByClassName("ppp"));
+                                    var id = this.parentNode.parentNode.getElementsByClassName("idd");
+                                    var upid = Object(id[0]).innerHTML;
+                                    var idvalue = parseInt(upid.substring((upid.length - 3), upid.length));
+                                    var value = {
+                                        "id": idvalue,
+                                        "decision": "approved"
+                                    };
+                                    var data = JSON.stringify(value);
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("post", "http://" + address + "/info/check/approve", true);
+                                    xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                                    xhr.setRequestHeader("Authorization", token);
+                                    xhr.send(data);
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4) {
+                                            if (xhr.status >= 200 && xhr.status < 300) {
+                                                var obj = JSON.parse(xhr.responseText);
+                                                if (obj.code == 200) {
+                                                    alert(obj.message);
+                                                    window.location.reload();
+                                                }
+                                                if (obj.code == 400) {
+                                                    alert(obj.message);
+                                                }
+                                                if (obj.code == 403) {
+                                                    alert(obj.message);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            var disapprove = document.getElementsByClassName("disapprove");
+                            for (var i = 0; i < disapprove.length; i++) {
+                                disapprove[i].onclick = function() {
+                                    var id = this.parentNode.parentNode.getElementsByClassName("idd");
+                                    var unid = Object(id[0]).innerHTML;
+                                    var idvalue = parseInt(unid.substring((unid.length - 3), unid.length));
+                                    var value = {
+                                        "id": idvalue,
+                                        "decision": "rejected"
+                                    };
+                                    var data = JSON.stringify(value);
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("post", "http://" + address + "/info/check/approve", true);
+                                    xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                                    xhr.setRequestHeader("Authorization", token);
+                                    xhr.send(data);
+                                    console.log(data);
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4) {
+                                            if (xhr.status >= 200 && xhr.status < 300) {
+                                                var obj = JSON.parse(xhr.responseText);
+                                                if (obj.code == 201) {
+                                                    alert(obj.message);
+                                                    window.location.reload();
+                                                }
+                                                if (obj.code == 400) {
+                                                    alert(obj.message);
+                                                }
+                                                if (obj.code == 403) {
+                                                    alert(obj.message);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // var approve = document.getElementsByClassName("approve");
+        //     for (var i = 0; i < approve.length; i++) {
+        //         approve[i].onclick = function () {
+        //             console.log(this.parentNode.parentNode.getElementsByClassName("ppp"));
+        //             var id = this.parentNode.parentNode.getElementsByClassName("ppp");
+        //             var text = this.parentNode.parentNode.getElementsByClassName("ddd");
+        //             var idvalue = parseInt(id[0].innerText);
+        //             var textvalue = text[0].innerText;
+        //             console.log(typeof (value))
+        //             var value = { "id": id,"description":textvalue};
+        //             var data = JSON.stringify(value);
+        //             var xhr = new XMLHttpRequest();
+        //             xhr.open("post", "http://" + address + "/info/check/approve", true);
+        //             xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+        //             xhr.setRequestHeader("Authorization", token);
+        //             xhr.send(data);
+        //             xhr.onreadystatechange = function () {
+        //                 if (xhr.readyState == 4) {
+        //                     if (xhr.status >= 200 && xhr.status < 300) {
+        //                         var obj = JSON.parse(xhr.responseText);
+        //                         if (obj.code == 400) {
+        //                             alert(obj.message);
+        //                         }
+        //                         if (obj.code == 403) {
+        //                             alert(obj.message);
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // var disapprove = document.getElementsByClassName("disapprove");
+        // for (var i = 0; i < disapprove.length; i++) {
+        //     disapprove[i].onclick = function () {
+        //         console.log(this.parentNode.parentNode.getElementsByClassName("ppp"));
+        //         var id = this.parentNode.parentNode.getElementsByClassName("ppp");
+        //         console.log(id[0].innerText);
+        //         var value = parseInt(id[0].innerText);
+        //         console.log(typeof (value))
+        //         var idp = { "id": id };
+        //         var data = JSON.stringify(idp);
+        //         var xhr = new XMLHttpRequest();
+        //         xhr.open("post", "http://" + address + "/feedback/approve", true);
+        //         xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+        //         xhr.setRequestHeader("Authorization", token);
+        //         xhr.send(data);
+        //         xhr.onreadystatechange = function () {
+        //             if (xhr.readyState == 4) {
+        //                 if (xhr.status >= 200 && xhr.status < 300) {
+        //                     var obj = JSON.parse(xhr.responseText);
+        //                     if (obj.code == 400) {
+        //                         alert(obj.message);
+        //                     }
+        //                     if (obj.code == 403) {
+        //                         alert(obj.message);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

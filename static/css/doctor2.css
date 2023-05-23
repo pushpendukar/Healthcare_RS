@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: lightblue
+}
+
+.bg {
+    background-image: url("../img/Login-page.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+.out {
+    margin: 120px;
+}
+
+.top {
+    position: relative;
+}
+
+.top-left {
+    border: 1px solid;
+    border-radius: 15px;
+    position: absolute;
+    left: 1056px;
+    top: -75px;
+    width: 222px;
+    height: 55px;
+    background-color: white;
+}
+
+#username {
+    position: absolute;
+    font-size: 20px;
+    padding: 15px;
+}
+
+#userimg {
+    width: 50px;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 50%;
+    position: absolute;
+    left: 170px;
+    top: 2px;
+    background-color: rgb(56, 170, 219);
+}
+
+.center {
+    position: relative;
+    left: 100px;
+    top: -35px;
+}
+
+.name {
+    position: relative;
+    top: 50px;
+}
+
+#name {
+    position: relative;
+    font-size: 25px;
+    left: 69px;
+    color: white;
+}
+
+#text1 {
+    width: 250px;
+    height: 30px;
+    font-size: 18px;
+    margin-left: 75px;
+}
+
+.introduction {
+    position: relative;
+    font-size: 25px;
+}
+
+#info {
+    position: relative;
+    top: 65px;
+    left: -5px;
+    color: white;
+}
+
+.input {
+    width: 100px;
+    height: 200px;
+    position: absolute;
+    left: 120px;
+    top: 65px;
+    margin: 5px;
+}
+
+.text {
+    margin: auto;
+    width: 600px;
+    height: 200px;
+    margin-left: 30px;
+}
+
+.tag {
+    font-size: 25px;
+    position: relative;
+    top: 250px;
+}
+
+
+/* .haveTags input::after{
+            display: inline-block;
+            padding: 0 0 0 10px;
+            margin: 2px 10px;
+            border: 1px solid;
+            height: 50px;
+            width: 100px;
+            content: "+ Knee";
+            background: linear-gradient(0deg,rgba(0,172,238,1) 0%, rgba(2,126,251,1));
+            border-radius: 10px;
+
+        } */
+
+.haveTags div {
+    height: 50px;
+    width: 200px;
+    float: left;
+    margin-right: 55px;
+    border: 1px solid;
+    border-radius: 10px;
+    /* background-color: rgba(0, 172, 238, 1); */
+}
+
+.tags {
+    position: relative;
+    height: 46px;
+    width: 196px;
+    top: 0px;
+    left: 0px;
+    border-radius: 10px;
+}
+
+.bottom {
+    position: absolute;
+    height: 100px;
+    left: 700px;
+    top: 130px;
+}
+
+.btn {
+    /* border: 1px solid; */
+    border-radius: 1000px;
+    width: 120px;
+    height: 50px;
+    /* margin: 450px auto; */
+    background-color: #31b820ef;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    color: white;
+    /* margin-top: 450px; */
+    /* margin-left: auto;
+    margin-right: auto; */
+    position: absolute;
+    top: 480px;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+
+a {
+    text-decoration: none;
+}
+
+#p {
+    color: white;
+}
+
+.t {
+    height: 50px;
+    width: 200px;
+    font-size: 15px;
+    text-align: center;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#tabbar {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 100%;
+    background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+    z-index: -1;
+}
+
+#logout {
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    width: 50px;
+    height: 50px;
+    /* background-color: #31b820ef; */
+    border-radius: 10000000px;
+    /* border-color: #31b820ef; */
+    background-image: url('../img/patient.png');
+    background-size: cover;
+}
+
+#tabbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+    z-index: -1;
+}
+
+textarea::-webkit-input-placeholder {
+    font-size: 20px;
+}

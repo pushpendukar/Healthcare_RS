@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+        Detail Page
+    </title>
+    <!-- <div>
+            <img src="img/register_head.png" width="30%" height="auto">
+        </div> -->
+    <h1 id="head">Doctor Details</h1>
+</head>
+<link rel="stylesheet" type="text/css" href="css/detail.css">
+<link rel="stylesheet" type="text/css" href="js/detail.js">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-2.2.3.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+<link type="text/css" href="css/jquery-ui.min.css" rel="stylesheet">
+
+<body background="img/bg1.2.jpg" style="background-size:100%; background-attachment: fixed;">
+    <div id="tabbar">
+        <img src="img/logo.jpg" style="height:100px;width:100px;">
+    </div>
+    <select type="submit" id="logout" onchange="logout()">
+        <option id="option1">
+        </option>
+        <option id="option2">Logout</option>
+    </select>
+    <p id="docname">Doctor X</p>
+    <p id="score">Average Score: 4.9</p>
+    <p id="hname">Hospital: No.1 hospital</p>
+    <p id="description">This is description</p>
+    <div id="major">
+        <p>Main Majors:</p>
+
+        <!-- <div class="divinline">Shoulder</div>
+     <div class="divinline">Knee</div>
+     <div class="divinline"></div>
+     <div class="divinline"></div>
+     <div class="divinline"></div> -->
+        <!-- <div class="divinline"></div> -->
+    </div>
+    <!-- <div id="square">
+    </div> -->
+    <!-- <div id="square2">
+    </div> -->
+    <button id="return" onclick="returntolist()">return</button>
+    <div>
+        <p id="feedback" onclick="feedback()">Feedback </p>
+        <div id="feedbackmenu" style="display: none;">
+            <span style="position:relative; top:-5px;">Score: </span> <span id="num">1</span><input type="radio" name="score" checked style="margin-right: 20px;">
+            <span id="num">2</span><input type="radio" name="score" checked style="margin-right: 20px;">
+            <span id="num">3</span><input type="radio" name="score" checked style="margin-right: 20px;">
+            <span id="num">4</span><input type="radio" name="score" checked style="margin-right: 20px;">
+            <span id="num">5</span><input type="radio" name="score" checked style="margin-right: 20px;">
+            <div>
+                <div id="commenttxt">Comment: </div>
+                <textarea id="comment" name="comment" type="text" value=""></textarea>
+                <div id="btn_div">
+                    <input name="submit" class="btn btn-primary" type="submit" id="submit" value="Submit" onclick="thanks()">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="js/constant.js"></script>
+    <script type="text/javascript">
+        // var did=localStorage.getItem('detailId');
+        var ipAddress = getAddress();
+        var did = localStorage["docid"];
+        var idtemp = {
+            "doctor_id": did
+        };
+        var getInfo = JSON.stringify(idtemp);
+        window.onload = function() {
+            var name = localStorage.username;
+            // console.log(name);
+            document.getElementById('option1').innerHTML = name;
+            var btn = document.getElementById("logout");
+            // console.log(window.localStorage.getItem('tokenp'));
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", 'http://' + ipAddress + '/recommendation/doctor/info');
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("Authorization", window.localStorage.getItem('tokenp'));
+            xhr.send(getInfo);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        // console.log(xhr.responseText);
+                        var info = xhr.responseText;
+                        var obj = JSON.parse(info);
+                        var code = obj.code;
+                        if (code === 200) {
+                            var docname = document.getElementById("docname");
+                            var score = document.getElementById("score");
+                            var hname = document.getElementById("hname");
+                            var description = document.getElementById("description");
+                            var majors = document.getElementsByClassName("divinline");
+                            docname.innerHTML = "Name: " + obj.doctor.dname;
+                            score.innerHTML = "Score: " + obj.doctor.score;
+                            hname.innerHTML = "Hospital: " + obj.doctor.hname;
+                            description.innerHTML = "Title: " + obj.doctor.description;
+                            for (var i = 0; i < obj.doctor.tagsArr.length; i++) {
+                                var major = document.getElementById("major");
+                                var div = document.createElement("div");
+                                major.appendChild(div);
+                                div.className = "divinline";
+                                div.innerHTML = obj.doctor.tagsArr[i];
+                            }
+                        }
+                        if (code === 400) {
+                            alert(obj.messgae);
+                        }
+                        if (code === 403) {
+                            alert(obj.message);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        function feedback() {
+            document.getElementById("feedbackmenu").style.display = "block";
+        }
+
+        function logout() {
+            localStorage.tokenp = "";
+            // console.log(localStorage.username);
+            window.location.href = './login.html';
+        }
+
+        function returntolist() {
+
+            console.log(localStorage);
+            // if (localStorage.jumpfrom === "1") {
+            //     window.location.href = './listwithL.html';
+            // } else if (localStorage.jumpfrom === "0") {
+            //     window.location.href = './list.html';
+            // }
+            window.location.replace(document.referrer);
+
+        }
+
+        function thanks() {
+            var scoretemp = document.getElementById('num');
+            var score = parseInt(scoretemp.innerText);
+            var comment = document.getElementById('comment');
+            var sentemp = {
+                "doctor_id": did,
+                "score": score,
+                "comment": comment
+            };
+            var sendF = JSON.stringify(sentemp);
+            var xhr = new XMLHttpRequest();
+            // console.log(ipAddress);
+            xhr.open("post", 'http://' + ipAddress + '/feedback/send');
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("Authorization", window.localStorage.getItem('tokenp'));
+            xhr.send(sendF);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        // console.log(xhr.responseTex);
+                        var info = xhr.responseText;
+                        var obj = JSON.parse(info);
+                        var code = obj.code;
+                        if (code === 200) {
+                            alert(obj.message);
+                            window.location.href = "./patient.html";
+                        }
+                        if (code === 400) {
+                            alert(obj.message);
+                        }
+                        if (code === 403) {
+                            alert(obj.message);
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

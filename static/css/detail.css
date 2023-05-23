@@ -1,0 +1,185 @@
+body {
+    background-color: #EEFFFF;
+}
+
+#head {
+    text-align: center;
+    margin: 30px;
+}
+
+h3 {
+    font-size: 25px;
+    margin-left: 150px;
+}
+
+p {
+    font-size: 25px;
+    line-height: 20px;
+    margin-left: 150px;
+}
+
+.divinline {
+    /*display: inline;*/
+    display: grid;
+    text-align: center;
+    font-size: 20px;
+    justify-items: center;
+    align-items: center;
+    margin-left: 140px;
+    margin-bottom: 20px;
+    width: 130px;
+    height: 70px;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1));
+    /*font-family: "Lato", sans-serif;*/
+    font-weight: 500;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    transition: all 0.3s ease;
+    border: none;
+
+    /*position: relative;*/
+    line-height: 30px;
+    padding: 0;
+}
+
+span {
+    /* position: relative; */
+    font-size: 23px;
+    margin-left: 150px;
+    /* bottom: 170px; */
+}
+
+#commenttxt {
+    font-size: 23px;
+    margin-left: 150px;
+    position: relative;
+    bottom: -10px;
+    /* height: 100px; */
+}
+
+input {
+    height: 30px;
+    width: 20px;
+    margin-left: 20px;
+}
+
+#num {
+    height: 5px;
+    width: 5px;
+    margin: 0px;
+    position: relative;
+    top: -5px;
+}
+
+#comment {
+    font-size: 23px;
+    margin-top: 12px;
+    margin-left: 150px;
+    height: 200px;
+    width: 60%;
+    border-radius: 10px;
+    height: 100px;
+}
+
+#btn_div {
+    padding: 20px;
+}
+
+.btn {
+    margin: 0px 30px 0px 70px;
+    width: 200px;
+    font-size: 22px;
+    height: 38px;
+    display: block;
+    margin-left: 36%;
+    /* color: #336699;
+    background-color: #DDFFFF; */
+    border-color: light;
+}
+
+#submit {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    background-color: #31b820ef;
+    border-radius: 10000000px;
+    top: 240px;
+    right: 85px;
+}
+
+#logout {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+    /* background-color: #31b820ef; */
+    border-radius: 10000000px;
+    /* border-color: #31b820ef; */
+    background-image: url('../img/patient.png');
+    background-size: cover;
+}
+
+#square {
+    position: fixed;
+    top: 97px;
+    left: 76px;
+    height: 265px;
+    width: 1200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.8;
+    z-index: -1;
+}
+
+#square2 {
+    position: fixed;
+    top: 376px;
+    left: 76px;
+    height: 260px;
+    width: 1200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.8;
+    z-index: -1;
+}
+
+#tabbar {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 100%;
+    background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 150%);
+    z-index: -1;
+}
+
+#feedback {
+    position: absolute;
+    top: 200px;
+    right: 250px;
+}
+
+#feedbackmenu {
+    position: absolute;
+    top: 250px;
+    right: 112px;
+}
+
+#return {
+    position: absolute;
+    top: 130px;
+    right: 230px;
+    width: 150px;
+    height: 50px;
+    background-color: #31b820ef;
+    border-radius: 10000000px;
+    color: rgb(255, 255, 255);
+    border: 0px;
+}
