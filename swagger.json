@@ -1,0 +1,2516 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "version":"1.0.0",
+        "title":"GRP Team02 Project",
+        "description":"The GRP project server-side apis"
+    },
+    "components":{
+        "securitySchemes":{
+            "bearerAuth":{
+                "type":"http",
+                "scheme":"bearer",
+                "bearerFormat":"JWT"
+            }
+        }
+    },
+    "paths":{
+        "/account/register":{
+            "post":{
+                "description":"To acquire user register information from front-end, and send to the blockchain-apis.",
+                "requestBody":{
+                    "description":"A JSON object contains user register information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for register.",
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "description":"the password for register.",
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "description":"the e-mail for register.",
+                                        "type":"string"
+                                    },
+                                    "type":{
+                                        "description":"the user type to register, 0 for doctor, 1 for hospital, 2 for patient, 3 for maintainer.",
+                                        "type":"integer"
+                                    },
+                                    "hospital_id":{
+                                        "description":"(Optional) if it is a doctor registration, the hospital_id (will be given from get request /info/hospital/list) of it should be provided",
+                                        "type":"integer"
+                                    },
+                                    "description":{
+                                        "description":"(Optional) if it is a hospital registration, the description (including the qualification registration number) should be provided",
+                                        "type":"string"
+                                    },
+                                    "location":{
+                                        "description":"(Optional) if it is a hospital registration, the location should be provided",
+                                        "type":"integer"
+                                    },
+                                    "name":{
+                                        "description":"the name of user",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "password":"123456",
+                                    "email":"abc@123.com",
+                                    "type":0,
+                                    "name":"XXX",
+                                    "hospital_id":999,
+                                    "description":"xxxxxx",
+                                    "location":"xxxxxx"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"The account has been created successfully."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, the username already exists",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"The user name has already existed."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "402":{
+                        "description":"bad request, the user number has reached its limitation",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":402,
+                                        "message":"The user number has reached its limitation."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account/login":{
+            "post":{
+                "description":"To acquire user login information from front-end, and send to the blockchain-apis.",
+                "requestBody":{
+                    "description":"a JSON object contains user login information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for login.",
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "description":"the password for login.",
+                                        "type":"string"
+                                    },
+                                    "type":{
+                                        "description":"the user type to login, 0 for doctor, 1 for hospital, 2 for patient, 3 for maintainer.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "password":"123456",
+                                    "type":0
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "token":{
+                                            "type":"string"
+                                        },
+                                        "type":{
+                                            "type":"integer"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "message": "Login successfully",
+                                        "token": "Bearer ......",
+                                        "type": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, the username does not exist",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "returnCode":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{                              
+                                        "code":401,
+                                        "message": "The user name does not exist."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "402":{
+                        "description":"bad request, wrong password.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "returnCode":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{                              
+                                        "code":402,
+                                        "message": "Wrong password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account/password":{
+            "post":{
+                "description":"To acquire the forgotten user password.",
+                "requestBody":{
+                    "description":"A JSON object contains user username and email and user type.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for register.",
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "description":"the e-mail for register.",
+                                        "type":"string"
+                                    },
+                                    "type":{
+                                        "description":"the user type to register, 0 for doctor, 1 for hospital, 2 for patient, 3 for maintainer.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "email":"abc@123.com",
+                                    "type":0
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"The email has been sent, please check."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, the username or email is wrong",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"username or email is incorrect."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/doctor/update/request":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post a information change request for doctor.\nREQUIRE: JWTToken in the header!!!",
+                "requestBody":{
+                    "description":"A JSON object contains name, description or tags to be updated.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "name":{
+                                        "description":"the update name of doctor.",
+                                        "type":"string"
+                                    },
+                                    "description":{
+                                        "description":"the update description of doctor.",
+                                        "type":"string"
+                                    },
+                                    "tagsArr":{
+                                        "description":"an array of strings storing all the selected tags",
+                                        "type":"array"
+                                    }
+                                },
+                                "example":{
+                                    "name":"doctor name",
+                                    "description":"I am doctor XX",
+                                    "type":["tag1", "tag2", "tag3"]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"request has been sent."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, already have requested before",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"Your last request is still pending, please wait"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/check/get":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the hospital get the doctor update request.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "returnArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "returnArray":[
+                                            {
+                                                "id": 999999,
+                                                "name": "a",
+                                                "description": "I am a",
+                                                "tagsArr": [
+                                                    "tag1",
+                                                    "tag2"
+                                                ]
+                                            },
+                                            {
+                                                "id": 999998,
+                                                "name": "b",
+                                                "description": "I am b",
+                                                "tagsArr": [
+                                                    "tag3",
+                                                    "tag4"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201":{
+                        "description":"success, but there is no update request currently",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":201,
+                                        "message":"no update request."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/check/approve":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post the checked doctor update request from hospital",
+                "requestBody":{
+                    "description":"A JSON object contains the approved doctors id (given when use info/check/get) and the decision from hospital(could be approved or rejected)",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "id":{
+                                        "description":"the id of requesting doctor.",
+                                        "type":"integer"
+                                    },
+                                    "decision":{
+                                        "description":"decision from hospital, could be approved or rejected",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "id":999999,
+                                    "decision":"approved/rejected"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"successfully updated."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":201,
+                                        "message":"successfully rejected."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, request does not exist",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"request does not exist."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+        },
+        "/verification/unverified/doctor":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the hospital get the unvrified doctor account.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "returnArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "retrunArray": [
+                                            {
+                                                "id": 99999,
+                                                "name": "a",
+                                                "hospital_id": 999,
+                                                "description": "I am a",
+                                                "score": 0,
+                                                "verified": 0
+                                            },
+                                            {
+                                                "id": 99998,
+                                                "name": "b",
+                                                "hospital_id": 999,
+                                                "description": "I am b",
+                                                "score": 0,
+                                                "verified": 0
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201":{
+                        "description":"success, but there is no unverified doctors currently",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":201,
+                                        "message":"no unverified doctors"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verification/unverified/hospital":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the maintainer get the unvrified hospital account.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "returnArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "retrunArray": [
+                                            {
+                                                "id": 99999,
+                                                "name": "XXXhospital",
+                                                "location": "XXdistrictXXroad",
+                                                "verified": 0
+                                            },
+                                            {
+                                                "id": 99998,
+                                                "name": "YYYhospital",
+                                                "location": "YYdistrictYYroad",
+                                                "verified": 0
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201":{
+                        "description":"success, but there is no unverified hospitals currently",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":201,
+                                        "message":"no unverified hospitals"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verification/verified/doctor":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post the checked doctor account from hospital",
+                "requestBody":{
+                    "description":"A JSON object contains the approved doctor's id (given when use /verification/unverified/doctor)",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "id":{
+                                        "description":"the id of requesting doctor.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "id":999999
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"successfully verified"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"bad request, doctor not in the hospital",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"doctor is not in your hospital"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+        },
+        "/verification/verified/hospital":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post the checked hospital account from maintainer",
+                "requestBody":{
+                    "description":"A JSON object contains the approved hospital's id (given when use /verification/unverified/hospital)",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "id":{
+                                        "description":"the id of requesting hospital.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "id":999999
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"successfully verified"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+        },
+        "/blockchain/register":{
+            "post":{
+                "description":"Need to be done by ZYL, SFY. Check whether the username is occupied, store the registered information if not",
+                "requestBody":{
+                    "description":"A JSON object contains user register information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for register.",
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "description":"the password for register.",
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "description":"the e-mail for register.",
+                                        "type":"string"
+                                    },
+                                    "type":{
+                                        "description":"the user type to register, 0 for doctor, 1 for hospital, 2 for patient, 3 for maintainer.",
+                                        "type":"integer"
+                                    },
+                                    "hospital_id":{
+                                        "description":"(Optional) if it is a doctor registration, the hospital_id (will be given from get request /info/hospital/list) of it should be provided",
+                                        "type":"integer"
+                                    },
+                                    "name":{
+                                        "description":"the name of user",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "password":"123456",
+                                    "email":"abc@123.com",
+                                    "type":0,
+                                    "name":"XXX",
+                                    "hospital_id":999
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "created":{
+                        "description":"the accout is successfully created, return the id and message, every user's id should be dictinct, no matter what type of user",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "id":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"created",
+                                        "id":99999
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "exist":{
+                        "description":"the username already exists",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"exist"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }              
+            }            
+        },
+        "/blockchain/login":{
+            "post":{
+                "description":"Need to be done by ZYL, SFY. Check whether the username exists and whetehr password matches",
+                "requestBody":{
+                    "description":"A JSON object contains user login information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for login.",
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "description":"the password for login.",
+                                        "type":"string"
+                                    },
+                                    "type":{
+                                        "description":"the user type to login, 0 for doctor, 1 for hospital, 2 for patient, 3 for maintainer.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "password":"123456",
+                                    "type":0
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "match":{
+                        "description":"the username exists and match with the password, return the id, type and message",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "id":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "type":{
+                                            "type":"integer"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"match",
+                                        "type":0,
+                                        "id":99999
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "not exist":{
+                        "description":"the username does not exists",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"not exist"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "not match":{
+                        "description":"the username exists, but the password is wrong",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"not match"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }                        
+            }            
+        },
+        "/blockchain/password":{
+            "post":{
+                "description":"Need to be done by ZYL, SFY. Check whether the username and email matches and exists, and return the password if matches",
+                "requestBody":{
+                    "description":"A JSON object contains the username and email",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "username":{
+                                        "description":"the username for login.",
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "description":"the password for login.",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "username":"abc",
+                                    "email":"abc@123.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "match":{
+                        "description":"the username and email exists and matches with each other, return the password of this user",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "password":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"match",
+                                        "password":"123456"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "not match":{
+                        "description":"the username does not exists, or the email and username does not match",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"not match"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }                        
+            }            
+        },
+        "/blockchain/feedback":{
+            "post":{
+                "description":"send feedback information from backend to blockchain",
+                "requestBody":{
+                    "description":"A JSON object contains feedback information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "patient_id":{
+                                        "description":"the id of patient",
+                                        "type":"integer"
+                                    },
+                                    "doctor_id":{
+                                        "description":"the id of doctor",
+                                        "type":"integer"
+                                    },
+                                    "score":{
+                                        "description":"the score made by the patient",
+                                        "type":"double"
+                                    },
+                                    "comment":{
+                                        "description":"the comment user made",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{"patient_id":9999,"doctor_id":1200,"score":5.0,"comment":"very good"}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "success":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message":"success"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "error":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/blockchain/feedback/list":{
+            "post":{
+                "description":"send patient list who made feedback to a doctor from blockchain to backend",
+                "requestBody":{
+                    "description":"A JSON object contains doctor id.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "id":{
+                                        "description":"the id of doctor",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{"id":1200}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "success":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "patientArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "success",
+                                        "patientArray": [
+                                            {"name":"XX","id":9999},{"name":"YY","id":9998}
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "error":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/blockchain/feedback/approve":{
+            "post":{
+                "description":"approve patient feedback request, send back the feedback score of that doctor made by the patient",
+                "requestBody":{
+                    "description":"A JSON object contains doctor id and patient id.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "doctor_id":{
+                                        "description":"the id of doctor",
+                                        "type":"integer"
+                                    },
+                                    "patient_id":{
+                                        "description":"the id of patient",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{"doctor_id":1200,"patient_id":1255}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "success":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "score":{
+                                            "description":"the score that patient marks for that doctor",
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "success",
+                                        "score":5.0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "error":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/doctor/get":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the doctor get their own information.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "doctorInfo":{
+                                            "type":"JSON"
+                                        },
+                                        "doctorTags":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "doctorInfo": {
+                                            "id": 3,
+                                            "dname": "XX",
+                                            "hname": "No10hospital",
+                                            "description": "I am XX",
+                                            "score": 0,
+                                            "verified": 1
+                                        },
+                                        "doctorTags": [
+                                            "tag1",
+                                            "tag2"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"no doctor information",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"no doctor information"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/hospital/get":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the hospital get its own information.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "hospitalInfo":{
+                                            "type":"JSON"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "hospitalInfo": {
+                                            "id": 2,
+                                            "name": "No10hospital",
+                                            "location": "district 1",
+                                            "verified": 0,
+                                            "description": "it is a hospital"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"no doctor information",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"no doctor information"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/hospital/list":{
+            "get":{
+                "description":"To get the hospital list for register.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "hospitalList":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "hospitalList": [
+                                            {
+                                                "name": "No1hospital",
+                                                "id": 2,
+                                                "location":"xxxx",
+                                                "description":"xxxxxx"
+                                            },
+                                            {
+                                                "name": "no2hospital",
+                                                "id": 4,
+                                                "location":"xxxx",
+                                                "description":"xxxxxx"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"no hospital information",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":401,
+                                        "message":"no hospital information"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/info/hospital/update":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post the information change request for hospital.",
+                "requestBody":{
+                    "description":"A JSON object contains name, description and location to be updated.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "name":{
+                                        "description":"the update name of hospital.",
+                                        "type":"string"
+                                    },
+                                    "description":{
+                                        "description":"the update description of hospital.",
+                                        "type":"string"
+                                    },
+                                    "location":{
+                                        "description":"the string of description",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "name":"hospital name",
+                                    "description":"we are hospital XX",
+                                    "location":"XXdistrictXXroad"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"successfully updated."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recommendation/search":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To post the symptoms to acquire the doctor list.",
+                "requestBody":{
+                    "description":"A JSON object contains an array of symptoms.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "symptoms":{
+                                        "description":"the array of strings (please contact SCP to get the possible symptoms).",
+                                        "type":"array"
+                                    },
+                                    "location(optional)":"some location"
+                                },
+                                "example":{"symptom":["out of breath","OTHER symptoms"],"location":"Bikini Bottom"}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "doctorArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "doctorArray": [
+                                        {
+                                            "id": 757,
+                                            "dname": "Trina",
+                                            "hname": "no1hospital",
+                                            "description": "chief physician",
+                                            "score": 3.5,
+                                            "verified": 1,
+                                            "tagsArr": [
+                                                "kidney cancer",
+                                                "Bladder Cancer"
+                                            ],
+                                            "distance":"(optional) if you input a location, than the distance will show as a double value, if you do not, the distance will not be return. The order is in order of disctance, note that the output does not inlcude unit"
+                                        },
+                                        {
+                                            "id": 460,
+                                            "dname": "Davida",
+                                            "hname": "no1hospital",
+                                            "description": "Deputy Chief Physician",
+                                            "score": 3.3,
+                                            "verified": 1,
+                                            "tagsArr": [
+                                                "Hepatitis B",
+                                                "fatty liver",
+                                                "alcoholic liver disease"
+                                            ],
+                                            "distance":"(optional) if you input a location, than the distance will show as a double value, if you do not, the distance will not be return. The order is in order of disctance, note that the output does not inlcude unit"
+                                        },
+                                        {
+                                            "id": 782,
+                                            "dname": "Harriet",
+                                            "hname": "no1hospital",
+                                            "description": "chief physician",
+                                            "score": 3.4,
+                                            "verified": 1,
+                                            "tagsArr": [
+                                                "Gastrointestinal disease"
+                                            ],
+                                            "distance":"(optional) if you input a location, than the distance will show as a double value, if you do not, the distance will not be return. The order is in order of disctance, note that the output does not inlcude unit"
+                                        },
+                                        {
+                                            "id": 230,
+                                            "dname": "Ethel",
+                                            "hname": "no1hospital",
+                                            "description": "chief physician",
+                                            "score": 3.6,
+                                            "verified": 1,
+                                            "tagsArr": [
+                                                "Otolithiasis"
+                                            ],
+                                            "distance":"(optional) if you input a location, than the distance will show as a double value, if you do not, the distance will not be return. The order is in order of disctance, note that the output does not inlcude unit"
+                                        }]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recommendation/doctor/info":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To show doctor information for patient.",
+                "requestBody":{
+                    "description":"The selected doctor id.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "doctor_id":{
+                                        "description":"the selected doctor id.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{"doctor_id":5}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "doctor":{
+                                            "type":"JSON"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "doctor": {
+                                            "id": 5,
+                                            "dname": "Blythe",
+                                            "hname": "no1hospital",
+                                            "description": "Deputy Chief Physician",
+                                            "score": 3.5,
+                                            "verified": 1,
+                                            "tagsArr": [
+                                                "ankylosing spondylitis",
+                                                "psoriatic arthritis",
+                                                "lupus erythematosus",
+                                                "Sjogren's syndrome",
+                                                "dermatomyositis"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feedback/get":{
+            "get":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To return the list of patient that made the feedback to the doctor.",
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"string"
+                                        },
+                                        "patientArray":{
+                                            "type":"array"
+                                        }
+                                    },
+                                    "example":{
+                                        "code": 200,
+                                        "patientArray": [
+                                            {"name":"XX","id":9999},{"name":"YY","id":9998}
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "message": "An error occurs.",
+                                        "code":400
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feedback/approve":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To approve the patients' feedback.",
+                "requestBody":{
+                    "description":"A JSON object contains the patient id (get when /blockchain/feedback/list).",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "id":{
+                                        "description":"the patient id.",
+                                        "type":"integer"
+                                    }
+                                },
+                                "example":{
+                                    "id":666
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feedback/send":{
+            "post":{
+                "security":[{"bearerAuth":[]}],
+                "description":"To let the patient send feedbcak request to a certain doctor",
+                "requestBody":{
+                    "description":"A JSON object contains feedback information.",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "doctor_id":{
+                                        "description":"the id of doctor",
+                                        "type":"integer"
+                                    },
+                                    "score":{
+                                        "description":"the score made by the patient",
+                                        "type":"double"
+                                    },
+                                    "comment":{
+                                        "description":"the comment user made",
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{"doctor_id":1200,"score":5.0,"comment":"very good"}
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":200,
+                                        "message":"your request has been submitted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"system error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":400,
+                                        "message": "An error occurs."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description":"not allowed to visit",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "code":{
+                                            "type":"integer"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{
+                                        "code":403,
+                                        "message":"Wrong user type! You are not allowed to visit."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }                                       
+    }
+}
