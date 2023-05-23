@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "cli-table": "^0.3.11",
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4",
+    "express": "^4.18.2",
+    "vorpal": "^1.12.0"
+  }
+}
