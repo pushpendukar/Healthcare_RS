@@ -1,4 +1,4 @@
-# Healthcare_RS
+# Healthcare Recommender System
 A case study on Healthcare Recommender Systems
 
 ## URL of the system
